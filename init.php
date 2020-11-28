@@ -23,6 +23,9 @@ require_once('db/migration.php');
 require_once('helpers/form.php');
 require_once('helpers/navigation.php');
 
+// APIs
+require_once('api/fetch.php');
+
 // Services
 require_once('services/table/online_masses.php');
 
