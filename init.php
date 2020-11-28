@@ -22,6 +22,7 @@ require_once('db/migration.php');
 // Helpers
 require_once('helpers/form.php');
 require_once('helpers/navigation.php');
+require_once('helpers/array.php');
 
 // APIs
 require_once('api/fetch.php');

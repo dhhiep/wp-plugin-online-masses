@@ -23,6 +23,7 @@ function online_masses_install()
       published_at TINYTEXT NOT NULL,
       ended_at TINYTEXT,
       auto_update TINYINT DEFAULT 1,
+      is_deleted TINYINT DEFAULT 0,
       PRIMARY KEY (timestamp)
     );";
 
@@ -59,6 +60,7 @@ function online_masses_install()
         published_at TINYTEXT NOT NULL,
         ended_at TINYTEXT,
         auto_update TINYINT DEFAULT 1,
+        is_deleted TINYINT DEFAULT 0,
         PRIMARY KEY (timestamp)
       );";
 

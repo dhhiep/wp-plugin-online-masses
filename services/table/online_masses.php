@@ -33,12 +33,16 @@ class Online_Masses_List_Table extends WP_List_Table {
 
   function column_actions($item) {
     $actions = array(
-      'edit' => sprintf('<a href="?page=online-masses_form&id=%s">%s</a>', $item['timestamp'], __('Edit', 'online_masses')),
-      'delete' => sprintf('<a href="?page=%s&action=delete&id=%s">%s</a>', $_REQUEST['page'], $item['timestamp'], __('Delete', 'online_masses')),
+      'edit' => sprintf('<a href="?page=online-masses_form&id=%s">%s</a>', $item['timestamp'], 'Edit'),
     );
 
-    return sprintf('%s', $this->row_actions($actions));
-  }
+    if($item['is_deleted'] ==  1){
+      $actions['recovery'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn khôi phục Thánh Lễ này không?\')" href="?page=online_masses_recovery&timestamp=%s">%s</a>', $item['timestamp'], 'Recovery');
+    } else {
+      $actions['delete'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn xoá Thánh Lễ này không?\')" href="?page=online_masses_delete&timestamp=%s">%s</a>', $item['timestamp'], 'Delete');
+    }
+
+    return sprintf('%s', $this->row_actions($actions));  }
 
   function get_columns() {
     $display_columns = array(
@@ -53,7 +57,7 @@ class Online_Masses_List_Table extends WP_List_Table {
     return $display_columns;
   }
 
-  function prepare_items() {
+  function prepare_items($delete = 0) {
     global $wpdb;
     global $online_masses_table_name;
 
@@ -75,7 +79,7 @@ class Online_Masses_List_Table extends WP_List_Table {
     $this->items =
       $wpdb->get_results(
         $wpdb->prepare(
-          "SELECT * FROM $online_masses_table_name ORDER BY timestamp DESC LIMIT %d OFFSET %d", $per_page, $paged)
+          "SELECT * FROM $online_masses_table_name WHERE is_deleted = $delete ORDER BY timestamp DESC LIMIT %d OFFSET %d", $per_page, $paged)
           , ARRAY_A
         );
 

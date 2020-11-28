@@ -9,7 +9,8 @@ class OnlineMass {
   public $event_type;
   public $published_at;
   public $ended_at;
-  public $auto_update;
+  public $auto_update = 1;
+  public $is_deleted = 0;
 
   // Class Methods
   public static function table_name(){
@@ -20,22 +21,16 @@ class OnlineMass {
     return $GLOBALS['wpdb'];
   }
 
-  public static function create_mass($mass) {
-    $online_mass = new self();
+  public static function mark_deleted($timestamp, $flag = 1) {
+    $online_mass = self::findBy('timestamp', $timestamp);
 
-    return $online_mass->create($mass);
-  }
-
-  public static function update_mass($mass) {
-    $online_mass = new self();
+    // Mark deleted
+    $mass = array(
+      "timestamp" => $timestamp,
+      "is_deleted" => $flag,
+    );
 
     return $online_mass->update($mass);
-  }
-
-  public static function delete_mass($timestamp) {
-    $online_mass = new self();
-
-    return $online_mass->delete($timestamp);
   }
 
   public static function fetch_all() {
@@ -52,9 +47,10 @@ class OnlineMass {
         }
 
         if($existed_mass){
-          self::update_mass($mass);
+          $existed_mass->update($mass);
         } else {
-          self::create_mass($mass);
+          $online_mass = new self();
+          $online_mass->create($mass);
         }
       }
     }
@@ -82,32 +78,13 @@ class OnlineMass {
 
   // Instance methods
   public function create($mass) {
-    return
-      self::db_connector()->insert(self::table_name(), array(
-        "timestamp" => $mass["timestamp"],
-        "id" => $mass["id"],
-        "url" => $mass["url"],
-        "thumbnail" => $mass["thumbnail"],
-        "title" => $mass["title"],
-        "event_type" => $mass["event_type"],
-        "event_type" => $mass["event_type"],
-        "published_at" => $mass["published_at"],
-        "ended_at" => $mass["ended_at"],
-      ));
+    $mass_data = array_merge($this->to_array(), array_compact($mass));
+    return self::db_connector()->insert(self::table_name(), $mass_data);
   }
 
   public function update($mass) {
-    return
-      self::db_connector()->update(self::table_name(), array(
-        "timestamp" => $mass["timestamp"],
-        "id" => $mass["id"],
-        "url" => $mass["url"],
-        "thumbnail" => $mass["thumbnail"],
-        "title" => $mass["title"],
-        "event_type" => $mass["event_type"],
-        "published_at" => $mass["published_at"],
-        "ended_at" => $mass["ended_at"],
-      ), array('timestamp' => $mass['timestamp']));
+    $mass_data = array_merge($this->to_array(), array_compact($mass));
+    return self::db_connector()->update(self::table_name(), $mass_data, array('timestamp' => $mass['timestamp']));
   }
 
   public function delete($timestamp){
@@ -130,6 +107,21 @@ class OnlineMass {
     return $timestamps;
   }
 
+  function to_array(){
+    return array (
+      'timestamp' => $this->timestamp,
+      'id' => $this->id,
+      'url' => $this->url,
+      'thumbnail' => $this->thumbnail,
+      'title' => $this->title,
+      'event_type' => $this->event_type,
+      'published_at' => $this->published_at,
+      'ended_at' => $this->ended_at,
+      'auto_update' => $this->auto_update,
+      'is_deleted' => $this->is_deleted,
+    );
+  }
+
   // Private methods
   private function set_self($item){
     $this->timestamp = $item['timestamp'];
@@ -141,6 +133,7 @@ class OnlineMass {
     $this->published_at = $item['published_at'];
     $this->ended_at = $item['ended_at'];
     $this->auto_update = $item['auto_update'];
+    $this->is_deleted = $item['is_deleted'];
 
     return $this;
   }
