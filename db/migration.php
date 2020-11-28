@@ -14,13 +14,15 @@ function online_masses_install()
 
     // sql to create your table
     $sql = "CREATE TABLE " . $table_name . " (
-      timestamp int(11) NOT NULL,
-      id tinytext NOT NULL,
-      url tinytext NOT NULL,
-      thumbnail tinytext NOT NULL,
-      title tinytext NOT NULL,
-      event_type tinytext NOT NULL,
-      published_at tinytext NOT NULL,
+      timestamp INT(11) NOT NULL,
+      id TINYTEXT NOT NULL,
+      url TINYTEXT NOT NULL,
+      thumbnail TINYTEXT NOT NULL,
+      title TINYTEXT NOT NULL,
+      event_type TINYTEXT NOT NULL,
+      published_at TINYTEXT NOT NULL,
+      ended_at TINYTEXT,
+      auto_update TINYINT DEFAULT 1,
       PRIMARY KEY (timestamp)
     );";
 
@@ -48,13 +50,15 @@ function online_masses_install()
     $installed_ver = get_option('online_masses_db_version');
     if ($installed_ver != $online_masses_db_version) {
       $sql = "CREATE TABLE " . $table_name . " (
-        timestamp int(11) NOT NULL,
-        id tinytext NOT NULL,
-        url tinytext NOT NULL,
-        thumbnail tinytext NOT NULL,
-        title tinytext NOT NULL,
-        event_type tinytext NOT NULL,
-        published_at tinytext NOT NULL,
+        timestamp INT(11) NOT NULL,
+        id TINYTEXT NOT NULL,
+        url TINYTEXT NOT NULL,
+        thumbnail TINYTEXT NOT NULL,
+        title TINYTEXT NOT NULL,
+        event_type TINYTEXT NOT NULL,
+        published_at TINYTEXT NOT NULL,
+        ended_at TINYTEXT,
+        auto_update TINYINT DEFAULT 1,
         PRIMARY KEY (timestamp)
       );";
 

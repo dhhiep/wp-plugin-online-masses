@@ -1,31 +1,41 @@
 <?php
-/*
-Plugin Name: Custom List Table With Database Example
-Description: A highly documented plugin that demonstrates how to create custom admin list-tables from database using WP_List_Table class.
-Version:     1.0
-Author:      Prashant Baldha
-Author URI:  https://github.com/pmbaldha/
-License:     GPL2
-*/
-
 /**
- * $online_masses_db_version - holds current database version
- * and used on plugin update to sync database tables
+ * Plugin Name: TGPSG Online Masses local
+ * Plugin URI: https://github.com/dhhiep/wp-plugin-online-masses
+ * Description: TGPSG Online Masses is a solution to embedded online masses live stream from channel "TGPSG Thánh Lễ trực tuyến" automatically.
+ * Version: 1.0
+ * Author: Hiep Dinh
+ * Author URI: https://github.com/dhhiep
  */
+
+//  declare global variables
 global $wpdb;
 
+// Configurations
 $online_masses_api_name = 'online-masses';
-$online_masses_db_version ='1.3';
+$online_masses_db_version ='1.0';
 $online_masses_table_name = $wpdb->prefix . 'online_masses';
 
+// Database utils
 require_once('db/migration.php');
-require_once('db/seed.php');
-require_once('helpers.php');
 
-require_once('api/fetch_data.php');
+// Helpers
+require_once('helpers/form.php');
+require_once('helpers/navigation.php');
 
+// Services
+require_once('services/table/online_masses.php');
+
+// Models
 require_once('models/online_mass.php');
 
-require_once('admin-menu.php');
-require_once('admin-list.php');
-require_once('admin-create.php');
+// Views
+require_once('views/admin/menu.php');
+require_once('views/admin/list.php');
+require_once('views/admin/new.php');
+require_once('views/admin/edit.php');
+require_once('views/admin/show.php');
+
+// Controllers
+require_once('controllers/admin/online_masses_controller.php');
+
