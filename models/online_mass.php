@@ -22,7 +22,7 @@ class OnlineMass {
   }
 
   public static function mark_deleted($timestamp, $flag = 1) {
-    $online_mass = self::findBy('timestamp', $timestamp);
+    $online_mass = self::find_by('timestamp', $timestamp);
 
     // Mark deleted
     $mass = array(
@@ -41,7 +41,7 @@ class OnlineMass {
     if (is_array($masses) || is_object($masses)){
       foreach ($masses as $mass) {
         // Don't update record mark not editable
-        $existed_mass = self::findBy('timestamp', $mass['timestamp']);
+        $existed_mass = self::find_by('timestamp', $mass['timestamp']);
         if($existed_mass && $existed_mass->allow_update != 1){
           continue;
         }
@@ -56,7 +56,7 @@ class OnlineMass {
     }
   }
 
-  public static function findBy($key, $value) {
+  public static function find_by($key, $value) {
     $table_name = self::table_name();
     $item =
       self::db_connector()->get_row(
