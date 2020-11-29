@@ -33,10 +33,10 @@ TGPSG Online Masses is a solution to embedded online masses live stream from cha
 
    Repository: [https://github.com/dhhiep/tgpsg_thanh_le_online](https://github.com/dhhiep/tgpsg_thanh_le_online)
 
-2. After fetch data from analytics API by cronjob, I will store them into database and using the `timestamp` is primary key.
+2. After fetch data from analytics API by cronjob, I will store them into database and using the `id` is primary key.
 
-   + If the `timestamp` is not exist I will create a new record.
-   + If the `timestamp` is existed and flag `allow_update` is true, I will update this record.
+   + If the `id` is not exist I will create a new record.
+   + If the `id` is existed and flag `allow_update` is true, I will update this record.
 3. Get video to display.
 
     ```php

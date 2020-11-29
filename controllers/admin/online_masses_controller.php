@@ -19,17 +19,17 @@ class AdminOnlineMassesController {
   }
 
   public static function delete(){
-    if($_GET['timestamp']){
+    if($_GET['id']){
       $delete_flag = 1;
-      OnlineMass::mark_deleted($_GET['timestamp'], $delete_flag);
+      OnlineMass::mark_deleted($_GET['id'], $delete_flag);
       redirect_prev_page();
     }
   }
 
   public static function recovery(){
-    if($_GET['timestamp']){
+    if($_GET['id']){
       $recovery_flag = 0;
-      OnlineMass::mark_deleted($_GET['timestamp'], $recovery_flag);
+      OnlineMass::mark_deleted($_GET['id'], $recovery_flag);
       redirect_prev_page();
     }
   }

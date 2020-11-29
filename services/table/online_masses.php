@@ -33,13 +33,13 @@ class Online_Masses_List_Table extends WP_List_Table {
 
   function column_actions($item) {
     $actions = array(
-      // 'edit' => sprintf('<a href="?page=online_masses_form&id=%s">%s</a>', $item['timestamp'], 'Edit'),
+      // 'edit' => sprintf('<a href="?page=online_masses_form&id=%s">%s</a>', $item['id'], 'Edit'),
     );
 
     if($item['is_deleted'] ==  1){
-      $actions['recovery'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn khôi phục Thánh Lễ này không?\')" href="?page=online_masses_recovery&timestamp=%s">%s</a>', $item['timestamp'], 'Recovery');
+      $actions['recovery'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn khôi phục Thánh Lễ này không?\')" href="?page=online_masses_recovery&id=%s">%s</a>', $item['id'], 'Recovery');
     } else {
-      $actions['delete'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn xoá Thánh Lễ này không?\')" href="?page=online_masses_delete&timestamp=%s">%s</a>', $item['timestamp'], 'Delete');
+      $actions['delete'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn xoá Thánh Lễ này không?\')" href="?page=online_masses_delete&id=%s">%s</a>', $item['id'], 'Delete');
     }
 
     return sprintf('%s', $this->row_actions($actions));  }
