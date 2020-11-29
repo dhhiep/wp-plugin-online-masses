@@ -1,21 +1,5 @@
 <?php
-/**
- * PART 4. Form for adding andor editing row
- * ============================================================================
- *
- * In this part you are going to add admin page for adding andor editing items
- * You cant put all form into this function, but in this example form will
- * be placed into meta box, and if you want you can split your form into
- * as many meta boxes as you want
- *
- * http://codex.wordpress.org/Data_Validation
- * http://codex.wordpress.org/Function_Reference/selected
- */
 
-/**
- * Form page handler checks is there some data posted and tries to save it
- * Also it renders basic wrapper in which we are callin meta box render
- */
 function online_masses_create_form_page_handler()
 {
     global $wpdb;
@@ -76,7 +60,7 @@ function online_masses_create_form_page_handler()
     }
 
     // here we adding our custom meta box
-    add_meta_box('persons_form_meta_box', 'Person data', 'online_masses_form_meta_box_handler', 'person', 'normal', 'default');
+    add_meta_box('online_masses_form_meta_box', 'Online mass data', 'online_masses_form_meta_box_handler', 'person', 'normal', 'default');
 
     ?>
 <div class="wrap">

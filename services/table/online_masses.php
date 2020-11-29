@@ -33,7 +33,7 @@ class Online_Masses_List_Table extends WP_List_Table {
 
   function column_actions($item) {
     $actions = array(
-      'edit' => sprintf('<a href="?page=online-masses_form&id=%s">%s</a>', $item['timestamp'], 'Edit'),
+      // 'edit' => sprintf('<a href="?page=online_masses_form&id=%s">%s</a>', $item['timestamp'], 'Edit'),
     );
 
     if($item['is_deleted'] ==  1){
