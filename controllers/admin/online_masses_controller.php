@@ -2,7 +2,7 @@
 
 class AdminOnlineMassesController {
   public static function list(){
-    if($_GET['refresh'] == true){
+    if(array_key_exists('refresh', $_GET) && $_GET['refresh'] == true){
       OnlineMass::fetch_all();
       redirect_prev_page();
     }

@@ -37,22 +37,47 @@ TGPSG Online Masses is a solution to embedded online masses live stream from cha
 
    + If the `id` is not exist I will create a new record.
    + If the `id` is existed and flag `allow_update` is true, I will update this record.
-3. Get video to display.
+3. Using WP shortcode to embedded video to frontend.
 
     ```php
-    OnlineMass::streaming_or_upcoming_video(); # Get current video is streaming or upcomming
-    OnlineMass::streamed_videos([number_of_videos]); # Get latest videos streamed
+    [online_masses_streaming_or_upcoming] # Get current video is streaming or upcomming
+    [online_masses_streamed] # Get latest videos streamed
     ```
 
 ## Admin menu
 
+#### 1. Features
 This plugin also allow admin:
 
 + Create a Mass.
 + Edit a Mass, when admin edit a mass, the flag of this mass `allow_update` will be false, so the data can't override by cronjob fetch data from API anymore.
 + Delete a Mass.
 + Recovery a Mass (deleted).
++ Embedded video by shortcodes.
 
+#### 2. Create a cronjob to fetch new data every 15 minutes.
+
+  1. Install `WP Crontrol`.
+  2. After installed, we go to `Tools > Cron Events`
+  3. At tab `Cron Schedules` create a new schedule
+
+      ```
+      Internal Name: Online Masses Fetcher
+      Interval (seconds): 900
+      Display name: Online Masses Fetcher
+      ```
+  4. Go to tab `Add PHP Cron Event` and create a new event
+
+		_PHP Code:_
+      ```php
+      OnlineMass::fetch_all();
+      ```
+		_Another fields:_
+      ```
+      Event Name (optional): Online Masses Fetcher
+      Next Run: Now
+      Recurrence: Online Masses Fetcher
+      ```
 
 ## TODO
 - [ ] Allow Admin create a Mass
