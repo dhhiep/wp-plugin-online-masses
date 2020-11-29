@@ -22,7 +22,7 @@ function online_masses_install()
       event_type TINYTEXT NOT NULL,
       published_at TINYTEXT NOT NULL,
       ended_at TINYTEXT,
-      auto_update TINYINT DEFAULT 1,
+      allow_update TINYINT DEFAULT 1,
       is_deleted TINYINT DEFAULT 0,
       PRIMARY KEY (timestamp)
     );";
@@ -59,7 +59,7 @@ function online_masses_install()
         event_type TINYTEXT NOT NULL,
         published_at TINYTEXT NOT NULL,
         ended_at TINYTEXT,
-        auto_update TINYINT DEFAULT 1,
+        allow_update TINYINT DEFAULT 1,
         is_deleted TINYINT DEFAULT 0,
         PRIMARY KEY (timestamp)
       );";

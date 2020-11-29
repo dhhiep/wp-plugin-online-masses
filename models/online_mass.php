@@ -9,7 +9,7 @@ class OnlineMass {
   public $event_type;
   public $published_at;
   public $ended_at;
-  public $auto_update = 1;
+  public $allow_update = 1;
   public $is_deleted = 0;
 
   // Class Methods
@@ -42,7 +42,7 @@ class OnlineMass {
       foreach ($masses as $mass) {
         // Don't update record mark not editable
         $existed_mass = self::findBy('timestamp', $mass['timestamp']);
-        if($existed_mass && $existed_mass->auto_update != 1){
+        if($existed_mass && $existed_mass->allow_update != 1){
           continue;
         }
 
@@ -117,7 +117,7 @@ class OnlineMass {
       'event_type' => $this->event_type,
       'published_at' => $this->published_at,
       'ended_at' => $this->ended_at,
-      'auto_update' => $this->auto_update,
+      'allow_update' => $this->allow_update,
       'is_deleted' => $this->is_deleted,
     );
   }
@@ -132,7 +132,7 @@ class OnlineMass {
     $this->event_type = $item['event_type'];
     $this->published_at = $item['published_at'];
     $this->ended_at = $item['ended_at'];
-    $this->auto_update = $item['auto_update'];
+    $this->allow_update = $item['allow_update'];
     $this->is_deleted = $item['is_deleted'];
 
     return $this;
