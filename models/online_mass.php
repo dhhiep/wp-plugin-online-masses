@@ -21,6 +21,27 @@ class OnlineMass {
     return $GLOBALS['wpdb'];
   }
 
+  public static function all($delete_status, $per_page, $paged) {
+    $table_name = self::table_name();
+    $items =
+      self::db_connector()->get_results(
+        self::db_connector()->prepare("
+          SELECT *
+          FROM $table_name
+          WHERE is_deleted = $delete_status
+          ORDER BY timestamp DESC
+          LIMIT $per_page OFFSET $paged
+        "), ARRAY_A
+      );
+
+    $online_masses =
+      array_map(function($item){
+        return new self($item);
+      }, $items);
+
+    return $online_masses;
+  }
+
   public static function mark_deleted($timestamp, $flag = 1) {
     $online_mass = self::find_by('timestamp', $timestamp);
 

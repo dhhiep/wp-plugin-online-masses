@@ -57,7 +57,7 @@ class Online_Masses_List_Table extends WP_List_Table {
     return $display_columns;
   }
 
-  function prepare_items($delete = 0) {
+  function prepare_items($delete_status = 0) {
     global $wpdb;
     global $online_masses_table_name;
 
@@ -76,12 +76,11 @@ class Online_Masses_List_Table extends WP_List_Table {
     // prepare query params, as usual current page, order by and order direction
     $paged = isset($_REQUEST['paged']) ? max(0, intval($_REQUEST['paged'] - 1) * $per_page) : 0;
 
+    $online_masses = OnlineMass::all($delete_status, $per_page, $paged);
     $this->items =
-      $wpdb->get_results(
-        $wpdb->prepare(
-          "SELECT * FROM $online_masses_table_name WHERE is_deleted = $delete ORDER BY timestamp DESC LIMIT %d OFFSET %d", $per_page, $paged)
-          , ARRAY_A
-        );
+      array_map(function($mass) {
+        return $mass->to_array();
+      }, $online_masses);
 
     // Configure pagination
     $this->set_pagination_args(array(
