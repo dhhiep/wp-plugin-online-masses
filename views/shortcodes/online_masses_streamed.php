@@ -1,13 +1,25 @@
 <?php
 function online_masses_streamed(){
-  $online_mass = OnlineMass::streamed();
-  $iframe_video_yesterday = online_masses_iframe_builder($online_mass[0]->id);
-  $iframe_video_last_2_day = online_masses_iframe_builder($online_mass[1]->id);
+  $number_of_videos = 6;
+  $online_masses = OnlineMass::streamed($number_of_videos);
+
+  $video_blocks = [];
+  foreach ($online_masses as $online_mass) {
+    $iframe_video = online_masses_iframe_builder($online_mass->id);
+    $video_block = <<<HTML
+      <div class="col small-12 medium-6 large-6">{$iframe_video}</div>
+    HTML;
+
+    array_push($video_blocks, $video_block);
+  }
+
+  // Join array to html string
+  $video_blocks = implode('', $video_blocks);
+
   return <<<HTML
     <div class="container mass-streamed">
       <div class="row row-large align-center">
-        <div class="col small-12 medium-6 large-6 left">{$iframe_video_yesterday}</div>
-        <div class="col small-12 medium-6 large-6 right">{$iframe_video_last_2_day}</div>
+        {$video_blocks}
       </div>
     </div>
   HTML;
