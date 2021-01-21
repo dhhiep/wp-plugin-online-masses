@@ -3,7 +3,7 @@
  * Plugin Name: TGPSG Online Masses
  * Plugin URI: https://github.com/dhhiep/wp-plugin-online-masses
  * Description: TGPSG Online Masses is a solution to embedded online masses live stream from channel "TGPSG Thánh Lễ trực tuyến" automatically.
- * Version: 1.1
+ * Version: 1.2
  * Author: Hiep Dinh
  * Author URI: https://github.com/dhhiep
  */
@@ -33,6 +33,9 @@ require_once('api/fetch.php');
 
 // Services
 require_once('services/table/online_masses.php');
+
+// Hooks
+require_once('hooks/actions/online_masses_fetch_all.php');
 
 // Models
 require_once('models/online_mass.php');

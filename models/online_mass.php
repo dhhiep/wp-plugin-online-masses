@@ -168,7 +168,6 @@ class OnlineMass {
       foreach ($masses as $mass) {
         // Don't update record has allow_update flag is false
         $existed_mass = self::find_by_id($mass['id']);
-        print_r($existed_mass);
         if($existed_mass && $existed_mass->allow_update != 1){
           continue;
         }
