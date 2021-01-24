@@ -1,6 +1,6 @@
 <?php
 function online_masses_streamed(){
-  $number_of_videos = 6;
+  $number_of_videos = 30;
   $online_masses = OnlineMass::streamed($number_of_videos);
 
   $video_blocks = [];
