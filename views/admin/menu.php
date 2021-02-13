@@ -9,6 +9,8 @@ function online_masses_admin_menu()
   // Hide on UI
   add_submenu_page(null, "Delete a Online Mass", 'Delete Item', 'activate_plugins', 'online_masses_delete', 'AdminOnlineMassesController::delete');
   add_submenu_page(null, "Recovery a Online Mass", 'Recovery Item', 'activate_plugins', 'online_masses_recovery', 'AdminOnlineMassesController::recovery');
+  add_submenu_page(null, "Mark Online Mass is Upcoming", 'mark_upcoming', 'activate_plugins', 'online_masses_mark_upcoming', 'AdminOnlineMassesController::mark_upcoming');
+  add_submenu_page(null, "Mark Online Mass is Streamed", 'mark_streamed', 'activate_plugins', 'online_masses_mark_streamed', 'AdminOnlineMassesController::mark_streamed');
 }
 
 add_action('admin_menu', 'online_masses_admin_menu');

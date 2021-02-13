@@ -28,13 +28,17 @@ class Online_Masses_List_Table extends WP_List_Table {
   }
 
   function column_ended_at($item) {
-    return $item['ended_at'] ? $item['ended_at'] : "Stream isn't start yet!";
+    return  in_array($item['ended_at'], array(NULL, 'NULL')) ? "Stream isn't start yet!" : $item['ended_at'];
   }
 
   function column_actions($item) {
-    $actions = array(
-      // 'edit' => sprintf('<a href="?page=online_masses_form&id=%s">%s</a>', $item['id'], 'Edit'),
-    );
+    $actions = array();
+
+    if($item['event_type'] ==  'streamed'){
+      $actions['mark_upcoming'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn cài đặt Thánh Lễ này thành chưa phát không?\')" href="?page=online_masses_mark_upcoming&id=%s">%s</a>', $item['id'], 'Mark Upcoming');
+    } else {
+      $actions['mark_streamed'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn cài đặt Thánh Lễ này thành đã phát không?\')" href="?page=online_masses_mark_streamed&id=%s">%s</a>', $item['id'], 'Mark Streamed');
+    }
 
     if($item['is_deleted'] ==  1){
       $actions['recovery'] = sprintf('<a onclick="return confirm(\'Bạn có chắc là muốn khôi phục Thánh Lễ này không?\')" href="?page=online_masses_recovery&id=%s">%s</a>', $item['id'], 'Recovery');

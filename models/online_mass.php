@@ -152,6 +152,30 @@ class OnlineMass {
     return $online_mass->update($mass);
   }
 
+  public static function mark_streamed($id) {
+    $online_mass = self::find_by_id($id);
+    $mass_streamed = array(
+      "id" => $id,
+      "event_type" => "streamed",
+      "ended_at" => strftime('%Y-%m-%d %T %z', time()),
+      "allow_update" => 0,
+    );
+
+    return $online_mass->update($mass_streamed);
+  }
+
+  public static function mark_upcoming($id) {
+    $online_mass = self::find_by_id($id);
+    $mass_upcoming = array(
+      "id" => $id,
+      "event_type" => "upcoming",
+      "ended_at" => 'NULL',
+      "allow_update" => 0,
+    );
+
+    return $online_mass->update($mass_upcoming);
+  }
+
   public static function create($mass) {
     $online_mass = new self();
     $mass_data = array_merge($online_mass->to_array(), array_compact($mass));

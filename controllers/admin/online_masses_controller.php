@@ -33,4 +33,18 @@ class AdminOnlineMassesController {
       redirect_prev_page();
     }
   }
+
+  public static function mark_streamed(){
+    if($_GET['id']){
+      OnlineMass::mark_streamed($_GET['id']);
+      redirect_prev_page();
+    }
+  }
+
+  public static function mark_upcoming(){
+    if($_GET['id']){
+      OnlineMass::mark_upcoming($_GET['id']);
+      redirect_prev_page();
+    }
+  }
 }
