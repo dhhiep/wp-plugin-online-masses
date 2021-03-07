@@ -205,6 +205,31 @@ class OnlineMass {
     }
   }
 
+  public static function fetch($video_id) {
+    $video_url = 'https://467f3zdo54.execute-api.ap-southeast-1.amazonaws.com/live/api/masses?action=video&video_id=' . $video_id;
+    $mass = file_get_contents($video_url);
+    $mass = json_decode($mass, true);
+
+    do_action( 'qm/debug', 'Fetching Video URL:' . $video_url);
+    do_action( 'qm/debug', 'Video Data:' . $mass);
+
+    if ((is_array($mass) || is_object($mass)) && $mass['timestamp']){
+      // Don't update record has allow_update flag is false
+      $existed_mass = self::find_by_id($mass['id']);
+      if($existed_mass && $existed_mass->allow_update != 1){
+        return $mass;
+      }
+
+      if($existed_mass){
+        $existed_mass->update($mass);
+      } else {
+        self::create($mass);
+      }
+    }
+
+    return $mass;
+  }
+
   // Constructor
   function __construct($data = null) {
     if($data) {
