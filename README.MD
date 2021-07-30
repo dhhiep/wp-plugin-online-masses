@@ -39,10 +39,100 @@ TGPSG Online Masses is a solution to embedded online masses live stream from cha
    + If the `id` is existed and flag `allow_update` is true, I will update this record.
 3. Using WP shortcode to embedded video to frontend.
 
-    ```php
-    [online_masses_streaming_or_upcoming] # Get current video is streaming or upcomming
-    [online_masses_streamed] # Get latest videos streamed
-    ```
+   ```php
+   [online_masses_streaming_or_upcoming] # Get current video is streaming or upcomming
+   [online_masses_streamed] # Get latest videos streamed
+   ```
+
+   Fox example:
+
+   HTML:
+   ```html
+   <div id="online-masses">
+      [section]
+         [title text="THÁNH LỄ SẮP DIỄN RA" tag_name="h2" color="rgb(186, 74, 52)" class="bottom-border-highlight"]
+         [online_masses_streaming_or_upcoming]
+      [/section]
+
+      [section]
+         [title text="XEM LẠI THÁNH LỄ TRƯỚC" tag_name="h2" color="rgb(186, 74, 52)"]
+         [online_masses_streamed]
+      [/section]
+   </div>
+   ```
+
+   CSS:
+   ```css
+   div#online-masses .header-nav .icon-inner {
+      text-align: center;
+   }
+
+   div#online-masses .header-nav .icon-inner img {
+      width: 80px;
+   }
+
+   div#online-masses .header-nav .icon-box-text {
+      margin-top: -10px;
+   }
+
+   div#online-masses .mass-upcomming iframe {
+      width: 100%;
+      height: 46.25vw;
+      margin-bottom: 20px;
+      max-width: 1110px;
+      max-height: 620px;
+   }
+
+   div#online-masses .mass-upcomming .title {
+      background-color: #b84933;
+      color: white;
+      padding: 7px 15px;
+      font-size: 17px;
+   }
+
+   div#online-masses .section-title-normal span {
+      margin-right: 15px;
+      padding-bottom: 7.5px;
+      border-bottom: 2px solid rgb(186, 74, 52);
+      margin-bottom: -2px;
+   }
+
+   div#online-masses .mass-streamed > .row {
+      margin: 0 !important;
+   }
+
+   div#online-masses .mass-streamed > .row > .col {
+      padding: 15px !important;
+   }
+
+   div#online-masses .mass-streamed iframe {
+      width: 100%;
+      height: 23vw;
+      margin-bottom: 0px;
+      max-height: 290px;
+   }
+
+   @media (max-width: 575px) {
+      div#online-masses .mass-streamed iframe {
+         height: 50vw;
+      }
+   }
+
+   @media (min-width: 576px) {
+      div#online-masses .header-nav {
+         margin-top: -80px;
+      }
+   }
+
+   @media (min-width: 768px) {
+   }
+
+   @media (min-width: 992px) {
+   }
+
+   @media (min-width: 1200px) {
+   }
+   ```
 
 ## Admin menu
 
@@ -79,6 +169,3 @@ This plugin also allow admin:
       Recurrence: Online Masses Fetcher
       ```
 
-## TODO
-- [ ] Allow Admin create a Mass
-- [ ] Allow Admin edit a Mass
