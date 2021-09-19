@@ -190,6 +190,8 @@ class OnlineMass {
 
     if (is_array($masses) || is_object($masses)){
       foreach ($masses as $mass) {
+        $mass = self::preparing_mass_data($mass);
+
         // Don't update record has allow_update flag is false
         $existed_mass = self::find_by_id($mass['id']);
         if($existed_mass && $existed_mass->allow_update != 1){
@@ -213,6 +215,8 @@ class OnlineMass {
     do_action( 'qm/debug', 'Fetching Video URL:' . $video_url);
     do_action( 'qm/debug', 'Video Data:' . $mass);
 
+    $mass = self::preparing_mass_data($mass);
+
     if ((is_array($mass) || is_object($mass)) && $mass['timestamp']){
       // Don't update record has allow_update flag is false
       $existed_mass = self::find_by_id($mass['id']);
@@ -228,6 +232,18 @@ class OnlineMass {
     }
 
     return $mass;
+  }
+
+  public static function preparing_mass_data($mass) {
+    $mass['title'] = self::remove_special_chars($mass['title']);
+
+    return $mass;
+  }
+
+  public static function remove_special_chars($string) {
+    $string = str_replace("🔴", '', $string);
+
+    return $string;
   }
 
   // Constructor
