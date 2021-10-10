@@ -82,8 +82,8 @@ class OnlineMass {
     $table_name = self::table_name();
 
     $timestamp = strtotime($strtotime);
-    $beginning_of_day = beginning_of_day($timestamp);
-    $end_of_day = end_of_day($timestamp);
+    $beginning_of_day = om_beginning_of_day($timestamp);
+    $end_of_day = om_end_of_day($timestamp);
 
     $items =
       self::db_connector()->get_results(
